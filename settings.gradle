@@ -1,0 +1,2 @@
+rootProject.name='Margin Calculator'
+include ':app'
