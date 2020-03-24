@@ -42,13 +42,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                final byte percent = 100;
+                final byte yearToMonths = 12;
 
                 // The amount to be loaned, Example: 10000 dollars
                 principalValue = Integer.parseInt(principal.getText().toString());
 
                 // Annual Interest Rate, Example: 3.29%. It is converted to a decimal out of 100 and converted to monthly rate
                 annualInterestValue = Double.parseDouble(annualInterest.getText().toString());
-                monthlyInterestRate = (annualInterestValue/100) / 12;
+                monthlyInterestRate = (annualInterestValue / percent) / yearToMonths;
 
                 // The period of the mortgage (in Years), Example: 25
                 periodValue = Integer.parseInt(period.getText().toString());
