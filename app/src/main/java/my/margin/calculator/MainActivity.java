@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import java.lang.Math;
 
 import java.text.NumberFormat;
 
@@ -16,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
     EditText principal, annualInterest, period;
     Button button;
 
-    int principalValue, annualInterestValue, periodValue, monthlyInterestRate, numberOfPayments;
-    double result;
+    int principalValue, periodValue, numberOfPayments;
+    double result, annualInterestValue, monthlyInterestRate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 principalValue = Integer.parseInt(principal.getText().toString());
 
                 // Annual Interest Rate, Example: 3.29%. It is converted to a decimal out of 100 and converted to monthly rate
-                annualInterestValue = Integer.parseInt(annualInterest.getText().toString());
+                annualInterestValue = Double.parseDouble(annualInterest.getText().toString());
                 monthlyInterestRate = (annualInterestValue/100) / 12;
 
                 // The period of the mortgage (in Years), Example: 25
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 numberOfPayments = periodValue * 12;
 
                 //The equation for calculating the mortgage:
-                result = (principalValue * monthlyInterestRate * Math.pow((1 + monthlyInterestRate), numberOfPayments)) / Math.pow((1 + monthlyInterestRate), numberOfPayments) - 1;
+                result = (principalValue * (monthlyInterestRate * (Math.pow((1 + monthlyInterestRate), numberOfPayments)))) / ((Math.pow((1 + monthlyInterestRate), numberOfPayments)) - 1);
 
 
                 String resultAsCurrency = NumberFormat.getCurrencyInstance().format(result);
