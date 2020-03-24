@@ -8,14 +8,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView answer;
-    EditText principal, annualIncome, period;
+    EditText principal, annualInterest, period;
     Button button;
 
-    float result;
-    int principalValue, annualIncomeValue, periodValue;
+    int principalValue, annualInterestValue, periodValue, monthlyInterestRate, numberOfPayments;
+    double result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         principal = (EditText)findViewById(R.id.principal_input);
 
-        annualIncome = (EditText)findViewById(R.id.annual_interest_input);
+        annualInterest = (EditText)findViewById(R.id.annual_interest_input);
 
         period = (EditText)findViewById(R.id.period_input);
 
@@ -39,16 +41,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
+                // The amount to be loaned, Example: 10000 dollars
                 principalValue = Integer.parseInt(principal.getText().toString());
 
-                annualIncomeValue = Integer.parseInt(annualIncome.getText().toString());
+                // Annual Interest Rate, Example: 3.29%. It is converted to a decimal out of 100 and converted to monthly rate
+                annualInterestValue = Integer.parseInt(annualInterest.getText().toString());
+                monthlyInterestRate = (annualInterestValue/100) / 12;
 
+                // The period of the mortgage (in Years), Example: 25
                 periodValue = Integer.parseInt(period.getText().toString());
+                numberOfPayments = periodValue * 12;
+
+                //The equation for calculating the mortgage:
+                result = (principalValue * monthlyInterestRate * Math.pow((1 + monthlyInterestRate), numberOfPayments)) / Math.pow((1 + monthlyInterestRate), numberOfPayments) - 1;
 
 
-                result = principalValue + annualIncomeValue + periodValue;
+                String resultAsCurrency = NumberFormat.getCurrencyInstance().format(result);
 
-                answer.setText(String.valueOf(result));
+                answer.setText(resultAsCurrency);
+
 
             }
         });
